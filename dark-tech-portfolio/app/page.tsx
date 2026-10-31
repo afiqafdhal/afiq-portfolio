@@ -20,7 +20,6 @@ import {
 import { profile, projects, skills } from "@/data/site";
 import { MonitorVisual } from "@/components/visuals";
 import { ProjectCard } from "@/components/project-card";
-import { PhotoGallery } from "@/components/photo-gallery";
 
 export default function Home() {
   return (
@@ -265,9 +264,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* NEW PHOTO GALLERY */}
-      <PhotoGallery />
 
       {/* TECHNICAL EXPERTISE */}
       <section className="section container" id="expertise">
