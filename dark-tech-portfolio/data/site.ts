@@ -25,8 +25,8 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    slug:'rgb-color-sorting',title:'RGB Sensor-Based Color Sorting System',category:'FINAL YEAR PROJECT',year:'FYP',status:'Academic project — details to verify',role:'Mechatronics engineering / system development',
-    summary:'A color-sorting engineering project using an RGB color sensor to distinguish objects by their measured color and support automated sorting decisions.',
+    slug:'rgb-color-sorting',title:'AI RGB Sensor-Based Color Sorting System',category:'FINAL YEAR PROJECT',year:'FYP',status:'Academic project — details to verify',role:'Mechatronics engineering / system development',
+    summary:'A color-sorting engineering project using an AI RGB color sensor to distinguish objects by their measured color and support automated sorting decisions.',
     tags:['RGB Color Sensor','Color Classification','Automation','Mechatronics','Sensor Integration'],icon:'brain',
     context:'Manual color sorting can be inconsistent and time-consuming. A sensor-based system can measure object color and use predefined rules to decide a sorting category.',
     contribution:['Explored RGB color sensing for object identification.','Developed the color detection and sorting-system concept as a final-year project.','Considered how sensor measurements can drive an automated sorting mechanism.'],
@@ -47,7 +47,7 @@ export const projects: Project[] = [
 ];
 
 export const skills = [
-  {title:'Mechatronics & Automation',items:['RGB Color Sensors','Automation Concepts','Electronics','Sensor Integration','System Testing']},
+  {title:'Mechatronics & Automation',items:['AI RGB Color Sensors','Automation Concepts','Electronics','Sensor Integration','System Testing']},
   {title:'Programming & Applications',items:['Python','JavaScript','Node-RED','Programming Fundamentals']},
   {title:'IoT & Digitalisation',items:['Industrial IoT','Networking Fundamentals','Manufacturing Digitalisation','Industry 4.0']},
   {title:'Engineering Approach',items:['Problem Solving','Prototyping','System Integration','Technical Documentation']},
