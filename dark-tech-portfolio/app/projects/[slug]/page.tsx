@@ -3,6 +3,8 @@ import Link from "next/link";
 import Image from "next/image";
 import fs from "node:fs";
 import path from "node:path";
+import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import {
   ArrowLeft,
   ArrowUpRight,
@@ -10,12 +12,15 @@ import {
 } from "lucide-react";
 
 import { projects } from "@/data/site";
+import { internshipWorks } from "@/data/internship-work";
 
+// Project image folder configuration
 const folders: Record<string, string> = {
   "rgb-color-sorting": "fruit-detection",
   "manufacturing-digital-transformation": "industrial",
 };
 
+// Automatically load project images
 function getPhotos(slug: string): string[] {
   const folder = folders[slug];
 
@@ -49,12 +54,34 @@ function getPhotos(slug: string): string[] {
     );
 }
 
+// Static routes for Cloudflare Pages
 export function generateStaticParams() {
   return projects.map((project) => ({
     slug: project.slug,
   }));
 }
 
+// Page metadata
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+
+  const project = projects.find(
+    (item) => item.slug === slug
+  );
+
+  return {
+    title: project
+      ? `${project.title} | Project Gallery`
+      : "Project Gallery",
+    description: project?.summary,
+  };
+}
+
+// Main project gallery
 export default async function ProjectGallery({
   params,
 }: {
@@ -67,12 +94,7 @@ export default async function ProjectGallery({
   );
 
   if (!project) {
-    return (
-      <main className="container page-wrap">
-        <h1>Project not found</h1>
-        <Link href="/projects">Back to projects</Link>
-      </main>
-    );
+    notFound();
   }
 
   const photos = getPhotos(slug);
@@ -83,19 +105,20 @@ export default async function ProjectGallery({
     : "Industrial Internship";
 
   const description = isFYP
-    ? "Explore my fruit ripeness detection project, AI model testing, Raspberry Pi integration and prototype development."
-    : "Explore my hands-on experience, monitoring systems, hardware integration and technical activities in the Digital Transformation Unit.";
+    ? "Explore the development and testing of my AI-based fruit ripeness detection and automated sorting system."
+    : "Explore the projects and technical activities I worked on during my internship in the Digital Transformation Unit.";
 
   const detailsUrl = `/projects/${slug}/details`;
 
   return (
     <main className="container gallery-page">
-
+      {/* BACK BUTTON */}
       <Link href="/projects" className="back-link">
         <ArrowLeft size={17} />
         All Projects
       </Link>
 
+      {/* PAGE HEADER */}
       <div className="case-eyebrow">
         PROJECT SHOWCASE / {project.year}
       </div>
@@ -109,71 +132,105 @@ export default async function ProjectGallery({
         {description}
       </p>
 
+      {/* GALLERY HEADING */}
       <div className="gallery-page-label">
         <Images size={20} />
-        Project Gallery
+        {isFYP
+          ? "FYP Project Gallery"
+          : "Internship Projects"}
       </div>
 
-      {photos.length > 0 ? (
-        <div className="showcase-gallery-grid">
-          {photos.map((photo, index) => (
-            <article
-              key={photo}
-              className="showcase-gallery-card"
-            >
-              <div className="showcase-gallery-image">
-                <Image
-                  src={photo}
-                  alt={`${heading} documentation ${index + 1}`}
-                  width={900}
-                  height={600}
-                  className="showcase-gallery-photo"
-                />
-              </div>
-
-              <div className="showcase-gallery-content">
-                <span className="showcase-gallery-number">
-                  PROJECT DOCUMENTATION /{" "}
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-
-                <h3>
-                  {isFYP
-                    ? "FYP Development"
-                    : "Internship Work"}
-                </h3>
-
-                <Link
-                  href={detailsUrl}
-                  className="showcase-gallery-details"
+      {/* FINAL YEAR PROJECT GALLERY */}
+      {isFYP ? (
+        <>
+          {photos.length > 0 ? (
+            <div className="showcase-gallery-grid">
+              {photos.map((photo, index) => (
+                <article
+                  key={photo}
+                  className="showcase-gallery-card"
                 >
-                  View Details
-                  <ArrowUpRight size={17} />
-                </Link>
-              </div>
-            </article>
-          ))}
-        </div>
+                  <div className="showcase-gallery-image">
+                    <Image
+                      src={photo}
+                      alt={`Fruit ripeness detection photo ${index + 1}`}
+                      width={900}
+                      height={600}
+                      className="showcase-gallery-photo"
+                    />
+                  </div>
+
+                  <div className="showcase-gallery-content">
+                    <h3>
+                      AI Fruit Ripeness Detection
+                    </h3>
+
+                    <Link
+                      href={detailsUrl}
+                      className="showcase-gallery-details"
+                    >
+                      View Details
+                      <ArrowUpRight size={17} />
+                    </Link>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div className="showcase-empty">
+              <Images size={38} />
+              <h2>FYP photos coming soon</h2>
+              <p>
+                Add your pictures to the
+                fruit-detection folder.
+              </p>
+            </div>
+          )}
+        </>
       ) : (
-        <div className="showcase-empty">
-          <Images size={38} />
-          <h2>Project photos coming soon</h2>
-          <p>
-            Add pictures to this project's image folder
-            to display them here automatically.
-          </p>
+        /* INDUSTRIAL INTERNSHIP GALLERY */
+        <div className="showcase-gallery-grid">
+          {internshipWorks.map((work) => {
+            const photo = photos[work.photoIndex];
+
+            return (
+              <article
+                key={work.slug}
+                className="showcase-gallery-card"
+              >
+                <div className="showcase-gallery-image">
+                  {photo ? (
+                    <Image
+                      src={photo}
+                      alt={work.title}
+                      width={900}
+                      height={600}
+                      className="showcase-gallery-photo"
+                    />
+                  ) : (
+                    <div className="showcase-empty">
+                      <Images size={34} />
+                      <p>Photo coming soon</p>
+                    </div>
+                  )}
+                </div>
+
+                <div className="showcase-gallery-content">
+                  <h3>{work.title}</h3>
+
+                  <Link
+                    href={`/projects/${slug}/work/${work.slug}`}
+                    className="showcase-gallery-details"
+                  >
+                    View Details
+                    <ArrowUpRight size={17} />
+                  </Link>
+                </div>
+              </article>
+            );
+          })}
         </div>
       )}
-
-      <div className="gallery-page-footer">
-        <Link
-          href={detailsUrl}
-          className="primary-btn"
-        >
-          View Full Project Description
-          <ArrowUpRight size={18} />
-        </Link>
-      </div>
     </main>
   );
 }
