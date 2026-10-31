@@ -1,195 +1,179 @@
 
 import Link from "next/link";
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import Image from "next/image";
+import fs from "node:fs";
+import path from "node:path";
 import {
   ArrowLeft,
-  ArrowRight,
-  Layers3,
-  Target,
-  Workflow,
+  ArrowUpRight,
+  Images,
 } from "lucide-react";
 
 import { projects } from "@/data/site";
-import { ProjectIcon } from "@/components/visuals";
-import { ProjectPhotos } from "@/components/project-photos";
 
-// Generate static pages for every project
+const folders: Record<string, string> = {
+  "rgb-color-sorting": "fruit-detection",
+  "manufacturing-digital-transformation": "industrial",
+};
+
+function getPhotos(slug: string): string[] {
+  const folder = folders[slug];
+
+  if (!folder) return [];
+
+  const directory = path.join(
+    process.cwd(),
+    "public",
+    "images",
+    "projects",
+    folder
+  );
+
+  if (!fs.existsSync(directory)) {
+    return [];
+  }
+
+  return fs
+    .readdirSync(directory)
+    .filter((file) =>
+      /\.(jpg|jpeg|png|webp|avif)$/i.test(file)
+    )
+    .sort((a, b) =>
+      a.localeCompare(b, undefined, {
+        numeric: true,
+      })
+    )
+    .map(
+      (file) =>
+        `/images/projects/${folder}/${encodeURIComponent(file)}`
+    );
+}
+
 export function generateStaticParams() {
-  return projects.map((p) => ({
-    slug: p.slug,
+  return projects.map((project) => ({
+    slug: project.slug,
   }));
 }
 
-// Generate metadata for each project page
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
-
-  const p = projects.find((x) => x.slug === slug);
-
-  return {
-    title: p?.title ?? "Project",
-    description: p?.summary,
-  };
-}
-
-// Individual project details page
-export default async function Detail({
+export default async function ProjectGallery({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
 
-  const p = projects.find((x) => x.slug === slug);
+  const project = projects.find(
+    (item) => item.slug === slug
+  );
 
-  if (!p) {
-    notFound();
+  if (!project) {
+    return (
+      <main className="container page-wrap">
+        <h1>Project not found</h1>
+        <Link href="/projects">Back to projects</Link>
+      </main>
+    );
   }
 
-  return (
-    <main className="container case-wrap">
+  const photos = getPhotos(slug);
+  const isFYP = slug === "rgb-color-sorting";
 
-      {/* BACK BUTTON */}
+  const heading = isFYP
+    ? "Final Year Project"
+    : "Industrial Internship";
+
+  const description = isFYP
+    ? "Explore my fruit ripeness detection project, AI model testing, Raspberry Pi integration and prototype development."
+    : "Explore my hands-on experience, monitoring systems, hardware integration and technical activities in the Digital Transformation Unit.";
+
+  const detailsUrl = `/projects/${slug}/details`;
+
+  return (
+    <main className="container gallery-page">
+
       <Link href="/projects" className="back-link">
         <ArrowLeft size={17} />
-        All projects
+        All Projects
       </Link>
 
-      {/* PROJECT CATEGORY */}
       <div className="case-eyebrow">
-        {p.category} <span>/</span> {p.year}
+        PROJECT SHOWCASE / {project.year}
       </div>
 
-      {/* PROJECT TITLE */}
-      <h1 className="case-title">
-        {p.title}
+      <h1 className="gallery-page-title">
+        {heading}
         <span className="period">.</span>
       </h1>
 
-      {/* PROJECT DESCRIPTION */}
-      <p className="case-lead">
-        {p.summary}
+      <p className="gallery-page-intro">
+        {description}
       </p>
 
-      {/* PROJECT STATUS AND ROLE */}
-      <div className="case-facts">
-        <div>
-          <span>PROJECT STATUS</span>
-          <strong>{p.status}</strong>
-        </div>
-
-        <div>
-          <span>MY ROLE</span>
-          <strong>{p.role}</strong>
-        </div>
+      <div className="gallery-page-label">
+        <Images size={20} />
+        Project Gallery
       </div>
 
-      {/* TECHNOLOGIES */}
-      <div className="tag-row case-tags">
-        {p.tags.map((t) => (
-          <span key={t}>{t}</span>
-        ))}
-      </div>
+      {photos.length > 0 ? (
+        <div className="showcase-gallery-grid">
+          {photos.map((photo, index) => (
+            <article
+              key={photo}
+              className="showcase-gallery-card"
+            >
+              <div className="showcase-gallery-image">
+                <Image
+                  src={photo}
+                  alt={`${heading} documentation ${index + 1}`}
+                  width={900}
+                  height={600}
+                  className="showcase-gallery-photo"
+                />
+              </div>
 
-      {/* ORIGINAL PROJECT ARTWORK */}
-      <div className={`case-art project-${p.icon}`}>
-        <div className="case-art-circle">
-          <ProjectIcon type={p.icon} size={75} />
-        </div>
+              <div className="showcase-gallery-content">
+                <span className="showcase-gallery-number">
+                  PROJECT DOCUMENTATION /{" "}
+                  {String(index + 1).padStart(2, "0")}
+                </span>
 
-        <span>
-          ENGINEERING CASE STUDY / {p.year}
-        </span>
-      </div>
+                <h3>
+                  {isFYP
+                    ? "FYP Development"
+                    : "Internship Work"}
+                </h3>
 
-      {/* TECHNICAL PROJECT DETAILS */}
-      <div className="case-content">
-
-        {/* LEFT SIDE: PROJECT DETAILS */}
-        <div>
-
-          {/* PROBLEM */}
-          <div className="case-section">
-            <h2>
-              <Target size={20} />
-              The problem
-            </h2>
-
-            <p>{p.context}</p>
-          </div>
-
-          {/* MY CONTRIBUTION */}
-          <div className="case-section">
-            <h2>
-              <Workflow size={20} />
-              What I built / worked on
-            </h2>
-
-            <ul>
-              {p.contribution.map((c) => (
-                <li key={c}>
-                  {c}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* PROJECT OUTCOME */}
-          <div className="case-section">
-            <h2>
-              <Layers3 size={20} />
-              Outcome and status
-            </h2>
-
-            <p>{p.outcome}</p>
-
-            {p.note && (
-              <p className="case-note">
-                {p.note}
-              </p>
-            )}
-          </div>
-        </div>
-
-        {/* RIGHT SIDE: SYSTEM ARCHITECTURE */}
-        <aside className="case-side">
-          <div className="side-title">
-            SYSTEM ARCHITECTURE
-          </div>
-
-          {p.architecture.map((a, i) => (
-            <div className="arch-step" key={`${i}-${a}`}>
-              <span>
-                {String(i + 1).padStart(2, "0")}
-              </span>
-
-              {a}
-
-              {i < p.architecture.length - 1 && (
-                <i>↓</i>
-              )}
-            </div>
+                <Link
+                  href={detailsUrl}
+                  className="showcase-gallery-details"
+                >
+                  View Details
+                  <ArrowUpRight size={17} />
+                </Link>
+              </div>
+            </article>
           ))}
-        </aside>
+        </div>
+      ) : (
+        <div className="showcase-empty">
+          <Images size={38} />
+          <h2>Project photos coming soon</h2>
+          <p>
+            Add pictures to this project's image folder
+            to display them here automatically.
+          </p>
+        </div>
+      )}
+
+      <div className="gallery-page-footer">
+        <Link
+          href={detailsUrl}
+          className="primary-btn"
+        >
+          View Full Project Description
+          <ArrowUpRight size={18} />
+        </Link>
       </div>
-
-      {/* NEW PROJECT PHOTO SECTION */}
-      <ProjectPhotos slug={p.slug} />
-
-      {/* RETURN TO PROJECTS */}
-      <Link
-        href="/projects"
-        className="text-link back-projects"
-      >
-        Explore other projects
-        <ArrowRight size={19} />
-      </Link>
-
     </main>
   );
 }

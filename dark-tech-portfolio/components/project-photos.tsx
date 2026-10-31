@@ -1,63 +1,42 @@
 
 import Image from "next/image";
-
-const projectPhotos: Record<
-  string,
-  { src: string; title: string; description: string }[]
-> = {
-  "rgb-color-sorting": [
-    {
-      src: "/images/projects/fruit-detection/detection.jpg",
-      title: "YOLOv8n Fruit Detection",
-      description:
-        "Computer vision detection and fruit ripeness classification.",
-    },
-    {
-      src: "/images/projects/fruit-detection/raspberry-pi.jpg",
-      title: "Raspberry Pi Integration",
-      description:
-        "Edge computing platform for camera-based AI inference.",
-    },
-    {
-      src: "/images/projects/fruit-detection/prototype.jpg",
-      title: "System Prototype",
-      description:
-        "Hardware development, integration and prototype testing.",
-    },
-  ],
-
-  "manufacturing-digital-transformation": [
-    {
-      src: "/images/projects/industrial/automation.jpg",
-      title: "Industrial Automation",
-      description:
-        "Automation devices and manufacturing technology.",
-    },
-    {
-      src: "/images/projects/industrial/dashboard.jpg",
-      title: "Digital Monitoring",
-      description:
-        "Industrial monitoring dashboard and data visualization.",
-    },
-    {
-      src: "/images/projects/industrial/hardware.jpg",
-      title: "Hardware Integration",
-      description:
-        "IoT devices, sensors and edge computing systems.",
-    },
-  ],
-};
+import fs from "node:fs";
+import path from "node:path";
 
 type ProjectPhotosProps = {
   slug: string;
 };
 
-export function ProjectPhotos({ slug }: ProjectPhotosProps) {
-  const photos = projectPhotos[slug] ?? [];
+const projectFolders: Record<string, string> = {
+  "rgb-color-sorting": "fruit-detection",
+  "manufacturing-digital-transformation": "industrial",
+};
 
-  if (photos.length === 0) {
-    return null;
-  }
+export function ProjectPhotos({ slug }: ProjectPhotosProps) {
+  const folder = projectFolders[slug];
+
+  if (!folder) return null;
+
+  const directory = path.join(
+    process.cwd(),
+    "public",
+    "images",
+    "projects",
+    folder
+  );
+
+  if (!fs.existsSync(directory)) return null;
+
+  const photos = fs
+    .readdirSync(directory)
+    .filter((file) =>
+      /\.(jpg|jpeg|png|webp|avif)$/i.test(file)
+    )
+    .sort((a, b) => a.localeCompare(b, undefined, {
+      numeric: true,
+    }));
+
+  if (photos.length === 0) return null;
 
   return (
     <section className="project-photo-section">
@@ -67,30 +46,31 @@ export function ProjectPhotos({ slug }: ProjectPhotosProps) {
       </div>
 
       <h2 className="project-photo-heading">
-        Project <span className="muted">photos.</span>
+        {slug === "manufacturing-digital-transformation"
+          ? "My Internship Work"
+          : "Project Photos"}
       </h2>
 
       <p className="project-photo-intro">
-        A visual look at the hardware, development
-        process and technical implementation.
+        {slug === "manufacturing-digital-transformation"
+          ? "A collection of my hands-on experience, technical activities and projects during my internship in the Digital Transformation Unit."
+          : "A visual collection of project development, testing and implementation."}
       </p>
 
       <div className="project-photo-grid">
-        {photos.map((photo) => (
-          <article className="project-photo-card" key={photo.src}>
+        {photos.map((file, index) => (
+          <article
+            className="project-photo-card"
+            key={file}
+          >
             <div className="project-photo-image-wrapper">
               <Image
-                src={photo.src}
-                alt={photo.title}
+                src={`/images/projects/${folder}/${encodeURIComponent(file)}`}
+                alt={`Project documentation photo ${index + 1}`}
                 width={900}
                 height={600}
                 className="project-photo-image"
               />
-            </div>
-
-            <div className="project-photo-details">
-              <h3>{photo.title}</h3>
-              <p>{photo.description}</p>
             </div>
           </article>
         ))}
