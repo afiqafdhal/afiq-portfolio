@@ -1,7 +1,7 @@
 export const profile = {
   name: 'Afiq Afdhal',
   shortName: 'Afiq',
-  initials: 'AA.',
+  initials: 'AA',
   role: 'Digital Transformation Intern',
   positioning: 'Mechatronics Engineering Student | Automation · IoT · Industry 4.0',
   resumeAvailable: false,
