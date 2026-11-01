@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
+import { CursorFX } from "@/components/cursor-fx";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { BackgroundFX } from "@/components/background-fx";
@@ -61,9 +62,7 @@ export const metadata: Metadata = {
   ],
 
   creator: profile.name,
-
   publisher: profile.name,
-
   category: "Engineering and Technology",
 
   robots: {
@@ -100,7 +99,7 @@ export const metadata: Metadata = {
 };
 
 // =====================================
-// ROOT LAYOUT + ANIMATED BACKGROUND
+// ROOT LAYOUT + BACKGROUND + CURSOR
 // =====================================
 
 export default function RootLayout({
@@ -112,6 +111,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <BackgroundFX />
+        <CursorFX />
         <Header />
         {children}
         <Footer />

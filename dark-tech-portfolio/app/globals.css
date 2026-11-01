@@ -5529,3 +5529,173 @@ body > *:not(.site-bg) {
     will-change: auto;
   }
 }
+
+/* ==========================================
+   SOFT LIGHT - VISIBILITY FIX
+   ========================================== */
+
+/* Allow the animated background to show through */
+html,
+body {
+  background: #061321 !important;
+}
+
+body > main,
+body > header,
+body > footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* Make the animated lighting more visible */
+.site-bg.soft-light-bg {
+  background: #061321;
+}
+
+.soft-light-bg .soft-light {
+  filter: blur(55px);
+  opacity: 1;
+}
+
+/* Brighten the blue light */
+.soft-light-bg .soft-light-one {
+  background: radial-gradient(
+    circle,
+    rgba(31, 139, 255, 0.60) 0%,
+    rgba(31, 139, 255, 0.22) 45%,
+    transparent 75%
+  );
+}
+
+/* Brighten the cyan light */
+.soft-light-bg .soft-light-two {
+  background: radial-gradient(
+    circle,
+    rgba(20, 220, 224, 0.48) 0%,
+    rgba(20, 220, 224, 0.16) 45%,
+    transparent 75%
+  );
+}
+
+/* Brighten the deep blue light */
+.soft-light-bg .soft-light-three {
+  background: radial-gradient(
+    circle,
+    rgba(81, 99, 255, 0.45) 0%,
+    rgba(81, 99, 255, 0.14) 45%,
+    transparent 75%
+  );
+}
+
+/* Let the glow appear through large page sections */
+.hero,
+#about,
+#expertise,
+#experience,
+#contact,
+.section-projects {
+  background-color: transparent !important;
+}
+
+/* Keep cards readable */
+.recruiter-intro,
+.recruiter-strength-card,
+.skill-card,
+.about-feature-card,
+.contact-block {
+  position: relative;
+}
+
+/* ==========================================
+   AA PORTFOLIO - PREMIUM CURSOR ANIMATION
+   ========================================== */
+
+.cursor-fx-layer {
+  position: fixed !important;
+  inset: 0;
+  z-index: 9999 !important;
+  pointer-events: none;
+  overflow: hidden;
+  background: transparent;
+  contain: layout style;
+}
+
+/* Soft blue glow */
+.cursor-soft-glow {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(55, 155, 255, 0.13) 0%,
+    rgba(35, 130, 235, 0.06) 35%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  will-change: transform;
+}
+
+/* Thin cursor ring */
+.cursor-ring {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(112, 210, 255, 0.7);
+  border-radius: 50%;
+  background: rgba(50, 150, 245, 0.04);
+  box-shadow: 0 0 15px rgba(65, 175, 255, 0.14);
+  opacity: 0;
+  transition:
+    width 0.25s ease,
+    height 0.25s ease,
+    background 0.25s ease,
+    opacity 0.25s ease;
+  will-change: transform;
+}
+
+/* Tiny centre dot */
+.cursor-dot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 5px;
+  height: 5px;
+  background: #86dbff;
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(100, 210, 255, 0.9);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  will-change: transform;
+}
+
+.cursor-visible {
+  opacity: 1;
+}
+
+/* Expand around interactive elements */
+.cursor-ring.cursor-hover {
+  width: 52px;
+  height: 52px;
+  background: rgba(80, 170, 255, 0.09);
+  border-color: rgba(116, 225, 255, 0.85);
+}
+
+/* Disable custom effect on touch devices */
+@media (hover: none), (pointer: coarse) {
+  .cursor-fx-layer {
+    display: none;
+  }
+}
+
+/* Respect accessibility preferences */
+@media (prefers-reduced-motion: reduce) {
+  .cursor-fx-layer {
+    display: none;
+  }
+}
