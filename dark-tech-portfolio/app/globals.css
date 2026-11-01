@@ -5699,3 +5699,412 @@ body > footer {
     display: none;
   }
 }
+
+/* ==========================================
+   PREMIUM ANIMATED FOCUS AREAS
+   Works with your existing page.tsx
+   ========================================== */
+
+.strip {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: rgba(5, 18, 34, 0.8);
+  border-top: 1px solid rgba(89, 175, 235, 0.12);
+  border-bottom: 1px solid rgba(89, 175, 235, 0.12);
+}
+
+/* Soft scanning light */
+.strip::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  left: -45%;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(42, 153, 235, 0.04),
+    rgba(80, 195, 255, 0.16),
+    rgba(42, 153, 235, 0.04),
+    transparent
+  );
+  animation: aaFocusScan 9s linear infinite;
+}
+
+/* Thin glowing line */
+.strip::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(88, 199, 255, 0.4),
+    transparent
+  );
+}
+
+.strip .strip-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Existing focus-area items */
+.strip .strip-content > div > span {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease,
+    text-shadow 0.3s ease;
+}
+
+/* Icons */
+.strip .strip-content > div > span svg {
+  color: #6bbfff;
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease,
+    filter 0.3s ease;
+}
+
+/* Hover movement */
+.strip .strip-content > div > span:hover {
+  color: #ffffff;
+  transform: translateY(-3px);
+  text-shadow: 0 0 14px rgba(96, 190, 255, 0.35);
+}
+
+.strip .strip-content > div > span:hover svg {
+  color: #91eaff;
+  transform: scale(1.15);
+  filter: drop-shadow(
+    0 0 9px rgba(90, 200, 255, 0.7)
+  );
+}
+
+/* Animated underline */
+.strip .strip-content > div > span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -8px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #70d9ff,
+    transparent
+  );
+  transform: scaleX(0);
+  transition: transform 0.35s ease;
+}
+
+.strip .strip-content > div > span:hover::after {
+  transform: scaleX(1);
+}
+
+/* Light scanning animation */
+@keyframes aaFocusScan {
+  0% {
+    left: -45%;
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    left: 105%;
+    opacity: 0;
+  }
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+  .strip .strip-content > div > span {
+    gap: 7px;
+  }
+
+  .strip::before {
+    width: 55%;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .strip::before {
+    animation: none !important;
+  }
+
+  .strip .strip-content > div > span,
+  .strip .strip-content > div > span svg {
+    transition: none !important;
+  }
+}
+
+/* ==========================================
+   FOCUS AREAS - VISIBLE PREMIUM UPGRADE
+   ========================================== */
+
+.strip {
+  position: relative;
+  min-height: 94px;
+  display: flex;
+  align-items: center;
+  background: rgba(9, 28, 48, 0.88) !important;
+  border-top: 1px solid rgba(85, 180, 245, 0.22);
+  border-bottom: 1px solid rgba(85, 180, 245, 0.22);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.strip::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -50%;
+  width: 45%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(55, 156, 245, 0.08),
+    rgba(82, 197, 255, 0.27),
+    rgba(55, 156, 245, 0.08),
+    transparent
+  );
+  animation: focusLightSweep 6s linear infinite;
+  pointer-events: none;
+}
+
+.strip .strip-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.strip .strip-content > span {
+  color: #92b8d7;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.strip .strip-content > div > span {
+  color: #e1efff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.strip .strip-content > div > span svg {
+  width: 21px;
+  height: 21px;
+  color: #70ccff;
+}
+
+.strip .strip-content > div > span:hover {
+  color: #ffffff;
+  transform: translateY(-4px);
+}
+
+.strip .strip-content > div > span:hover svg {
+  filter: drop-shadow(0 0 12px #55caff);
+}
+
+@keyframes focusLightSweep {
+  0% {
+    left: -50%;
+  }
+  100% {
+    left: 105%;
+  }
+}
+
+@media (max-width: 768px) {
+  .strip {
+    padding: 18px 0;
+  }
+
+  .strip .strip-content > div > span {
+    font-size: 11px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .strip::before {
+    animation: none !important;
+  }
+}
+
+/* ==========================================
+   FINAL PREMIUM FOCUS AREAS ANIMATION
+   ========================================== */
+
+.strip {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 100px;
+  overflow: hidden;
+  isolation: isolate;
+
+  background: rgba(8, 28, 49, 0.92) !important;
+
+  border-top: 1px solid rgba(85, 190, 255, 0.18);
+  border-bottom: 1px solid rgba(85, 190, 255, 0.18);
+}
+
+/* Moving blue light */
+.strip::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -45%;
+  width: 45%;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(41, 134, 240, 0.08),
+    rgba(73, 190, 255, 0.32),
+    rgba(41, 134, 240, 0.08),
+    transparent
+  );
+
+  pointer-events: none;
+  z-index: 0;
+
+  animation: finalFocusScan 6s linear infinite;
+}
+
+.strip .strip-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+/* Heading */
+.strip .strip-content > span {
+  color: #95c9ee !important;
+  font-size: 13px !important;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+/* Focus items */
+.strip .strip-content > div > span {
+  color: #e4f1ff !important;
+  font-size: 13px !important;
+  font-weight: 700;
+  letter-spacing: 1px;
+
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* Icons */
+.strip .strip-content > div > span svg {
+  color: #72ceff !important;
+  width: 21px;
+  height: 21px;
+}
+
+/* Hover animation */
+.strip .strip-content > div > span:hover {
+  color: white !important;
+  transform: translateY(-4px);
+}
+
+.strip .strip-content > div > span:hover svg {
+  filter: drop-shadow(
+    0 0 12px rgba(79, 200, 255, 0.9)
+  );
+}
+
+/* Scanning movement */
+@keyframes finalFocusScan {
+  0% {
+    left: -45%;
+  }
+
+  100% {
+    left: 105%;
+  }
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .strip {
+    padding: 20px 0;
+  }
+
+  .strip .strip-content > span {
+    font-size: 11px !important;
+  }
+
+  .strip .strip-content > div > span {
+    font-size: 10px !important;
+  }
+}
+
+/* Respect reduced-motion settings */
+@media (prefers-reduced-motion: reduce) {
+  .strip::before {
+    animation: none !important;
+  }
+}
+
+/* ==========================================
+   FOCUS AREAS - REMOVE BOX DESIGN
+   ========================================== */
+
+.strip {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  min-height: 90px;
+}
+
+/* Remove horizontal border effects */
+.strip::after {
+  display: none !important;
+}
+
+/* Keep the moving soft light */
+.strip::before {
+  opacity: 0.45;
+}
+
+/* Remove any box styling around the content */
+.strip .strip-content {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Keep the icons and text */
+.strip .strip-content > div > span {
+  background: transparent !important;
+  border: none !important;
+}
