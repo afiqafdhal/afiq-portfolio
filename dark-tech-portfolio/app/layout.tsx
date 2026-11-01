@@ -1,6 +1,7 @@
 
 import type { Metadata } from "next";
 import "./globals.css";
+import "./portfolio-v2.css";
 
 import { CursorFX } from "@/components/cursor-fx";
 import { Header } from "@/components/header";
@@ -34,7 +35,6 @@ export const metadata: Metadata = {
   },
 
   description: siteDescription,
-
   applicationName: siteName,
 
   keywords: [
@@ -55,12 +55,7 @@ export const metadata: Metadata = {
     "Malaysia",
   ],
 
-  authors: [
-    {
-      name: profile.name,
-    },
-  ],
-
+  authors: [{ name: profile.name }],
   creator: profile.name,
   publisher: profile.name,
   category: "Engineering and Technology",
@@ -99,7 +94,7 @@ export const metadata: Metadata = {
 };
 
 // =====================================
-// ROOT LAYOUT + BACKGROUND + CURSOR
+// ROOT LAYOUT
 // =====================================
 
 export default function RootLayout({
