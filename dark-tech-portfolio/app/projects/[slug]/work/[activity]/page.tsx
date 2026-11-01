@@ -1,56 +1,32 @@
 
 import Link from "next/link";
-import Image from "next/image";
-import fs from "node:fs";
-import path from "node:path";
 import { notFound } from "next/navigation";
 import {
   ArrowLeft,
-  CheckCircle2,
-  Layers3,
+  ArrowUpRight,
   Wrench,
   Target,
-  ArrowUpRight,
+  CheckCircle2,
+  Workflow,
+  Layers3,
+  BriefcaseBusiness,
+  MapPin,
 } from "lucide-react";
 
 import { internshipWorks } from "@/data/internship-work";
 
-const internshipSlug =
-  "manufacturing-digital-transformation";
-
-function getInternshipPhotos(): string[] {
-  const directory = path.join(
-    process.cwd(),
-    "public",
-    "images",
-    "projects",
-    "industrial"
-  );
-
-  if (!fs.existsSync(directory)) return [];
-
-  return fs
-    .readdirSync(directory)
-    .filter((file) =>
-      /\.(jpg|jpeg|png|webp|avif)$/i.test(file)
-    )
-    .sort((a, b) =>
-      a.localeCompare(b, undefined, { numeric: true })
-    )
-    .map(
-      (file) =>
-        `/images/projects/industrial/${encodeURIComponent(file)}`
-    );
-}
+const INTERNSHIP_SLUG = "manufacturing-digital-transformation";
 
 export function generateStaticParams() {
   return internshipWorks.map((work) => ({
-    slug: internshipSlug,
+    slug: INTERNSHIP_SLUG,
     activity: work.slug,
   }));
 }
 
-export default async function InternshipCaseStudy({
+export const dynamicParams = false;
+
+export default async function InternshipDetail({
   params,
 }: {
   params: Promise<{
@@ -60,135 +36,203 @@ export default async function InternshipCaseStudy({
 }) {
   const { slug, activity } = await params;
 
-  if (slug !== internshipSlug) notFound();
+  if (slug !== INTERNSHIP_SLUG) {
+    notFound();
+  }
 
   const work = internshipWorks.find(
     (item) => item.slug === activity
   );
 
-  if (!work) notFound();
-
-  const photos = getInternshipPhotos();
-  const cover = photos[work.photoIndex];
+  if (!work) {
+    notFound();
+  }
 
   return (
-    <main className="container work-detail-page">
+    <main className="container internship-page">
+
+      {/* BACK NAVIGATION */}
       <Link
-        href={`/projects/${internshipSlug}`}
-        className="back-link"
+        href={`/projects/${INTERNSHIP_SLUG}`}
+        className="internship-back"
       >
         <ArrowLeft size={17} />
         Back to Internship Projects
       </Link>
 
-      <div className="case-eyebrow">
-        DIGITAL TRANSFORMATION UNIT / {work.category}
-      </div>
-
-      <h1 className="work-detail-title">
-        {work.title}
-        <span className="period">.</span>
-      </h1>
-
-      <p className="work-detail-lead">
-        {work.summary}
-      </p>
-
-      {cover && (
-        <div className="internship-cover">
-          <Image
-            src={cover}
-            alt={work.title}
-            width={1400}
-            height={750}
-            className="internship-cover-image"
-            priority
-          />
-          <div className="internship-cover-overlay">
-            <span>INTERNSHIP PROJECT / 2026</span>
-          </div>
+      {/* PROJECT HEADER */}
+      <header className="internship-header">
+        <div className="internship-eyebrow">
+          <BriefcaseBusiness size={16} />
+          DIGITAL TRANSFORMATION UNIT
         </div>
-      )}
 
-      <div className="work-detail-grid">
-        <div>
-          <section className="case-section">
-            <h2>
-              <Target size={20} />
-              The Problem
-            </h2>
+        <div className="internship-category">
+          {work.category}
+        </div>
+
+        <h1 className="internship-title">
+          {work.title}
+          <span className="period">.</span>
+        </h1>
+
+        <p className="internship-lead">
+          {work.summary}
+        </p>
+
+        <div className="internship-meta">
+          <span>
+            <MapPin size={15} />
+            Port Klang, Malaysia
+          </span>
+          <span>
+            <Layers3 size={15} />
+            Industrial Training Project
+          </span>
+        </div>
+      </header>
+
+      {/* MAIN CONTENT */}
+      <div className="internship-layout">
+
+        <div className="internship-main">
+
+          {/* PROBLEM */}
+          <section className="internship-card">
+            <div className="internship-card-heading">
+              <div className="internship-icon">
+                <Target size={21} />
+              </div>
+
+              <div>
+                <span className="internship-number">
+                  01 / CHALLENGE
+                </span>
+                <h2>The Problem</h2>
+              </div>
+            </div>
+
             <p>{work.problem}</p>
           </section>
 
-          <section className="case-section">
-            <h2>
-              <Layers3 size={20} />
-              Project Overview
-            </h2>
+          {/* SOLUTION */}
+          <section className="internship-card">
+            <div className="internship-card-heading">
+              <div className="internship-icon">
+                <Workflow size={21} />
+              </div>
+
+              <div>
+                <span className="internship-number">
+                  02 / APPROACH
+                </span>
+                <h2>Project Description</h2>
+              </div>
+            </div>
+
             <p>{work.solution}</p>
           </section>
 
-          <section className="case-section">
-            <h2>
-              <Wrench size={20} />
-              My Involvement
-            </h2>
+          {/* CONTRIBUTIONS */}
+          <section className="internship-card">
+            <div className="internship-card-heading">
+              <div className="internship-icon">
+                <Wrench size={21} />
+              </div>
 
-            <ul>
-              {work.contribution.map((item) => (
-                <li key={item}>{item}</li>
+              <div>
+                <span className="internship-number">
+                  03 / RESPONSIBILITIES
+                </span>
+                <h2>My Contributions</h2>
+              </div>
+            </div>
+
+            <ul className="internship-contributions">
+              {work.contribution.map((item, index) => (
+                <li key={index}>
+                  <CheckCircle2 size={18} />
+                  <span>{item}</span>
+                </li>
               ))}
             </ul>
           </section>
 
-          <section className="case-section">
-            <h2>
-              <CheckCircle2 size={20} />
-              Outcome and Learning
-            </h2>
+          {/* OUTCOME */}
+          <section className="internship-card">
+            <div className="internship-card-heading">
+              <div className="internship-icon">
+                <CheckCircle2 size={21} />
+              </div>
+
+              <div>
+                <span className="internship-number">
+                  04 / RESULTS
+                </span>
+                <h2>Outcome & Learning</h2>
+              </div>
+            </div>
+
             <p>{work.outcome}</p>
           </section>
         </div>
 
-        <aside className="work-detail-side">
-          <div className="work-tools">
-            <h3>TOOLS & TECHNOLOGIES</h3>
+        {/* SIDEBAR */}
+        <aside className="internship-sidebar">
 
-            <div className="work-tool-tags">
+          {/* TECHNOLOGIES */}
+          <div className="internship-side-card">
+            <div className="internship-side-title">
+              TOOLS & TECHNOLOGIES
+            </div>
+
+            <div className="internship-tags">
               {work.tools.map((tool) => (
                 <span key={tool}>{tool}</span>
               ))}
             </div>
           </div>
 
-          <div className="case-side">
-            <div className="side-title">
+          {/* ARCHITECTURE */}
+          <div className="internship-side-card">
+            <div className="internship-side-title">
               SYSTEM ARCHITECTURE
             </div>
 
-            {work.architecture.map((step, index) => (
-              <div className="arch-step" key={step}>
-                <span>
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                {step}
+            <div className="internship-architecture">
+              {work.architecture.map((step, index) => (
+                <div
+                  className="internship-arch-step"
+                  key={index}
+                >
+                  <div className="internship-arch-number">
+                    {String(index + 1).padStart(2, "0")}
+                  </div>
 
-                {index < work.architecture.length - 1 && (
-                  <i>↓</i>
-                )}
-              </div>
-            ))}
+                  <div className="internship-arch-text">
+                    {step}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </aside>
       </div>
 
-      <Link
-        href={`/projects/${internshipSlug}`}
-        className="text-link"
-      >
-        Explore More Internship Projects
-        <ArrowUpRight size={18} />
-      </Link>
+      {/* BOTTOM NAVIGATION */}
+      <div className="internship-footer">
+        <div>
+          <span className="internship-number">
+            ENGINEERING PORTFOLIO
+          </span>
+          <h2>Explore more of my work.</h2>
+        </div>
+
+        <Link href="/projects" className="primary-btn">
+          All Projects
+          <ArrowUpRight size={18} />
+        </Link>
+      </div>
     </main>
   );
 }

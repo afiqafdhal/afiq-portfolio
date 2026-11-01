@@ -1,127 +1,111 @@
 
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { ArrowLeft, Wrench, Target, CheckCircle2 } from "lucide-react";
-import { internshipWorks } from "@/data/internship-work";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
 
-const INTERNSHIP_SLUG = "manufacturing-digital-transformation";
+import { projects } from "@/data/site";
+import { ProjectCard } from "@/components/project-card";
 
-export function generateStaticParams() {
-  return internshipWorks.map((work) => ({
-    slug: INTERNSHIP_SLUG,
-    activity: work.slug,
-  }));
-}
-
-export const dynamicParams = false;
-
-export default async function InternshipDetail({
-  params,
-}: {
-  params: Promise<{
-    slug: string;
-    activity: string;
-  }>;
-}) {
-  const { slug, activity } = await params;
-
-  if (slug !== INTERNSHIP_SLUG) {
-    notFound();
-  }
-
-  const work = internshipWorks.find(
-    (item) => item.slug === activity
-  );
-
-  if (!work) {
-    notFound();
-  }
-
+export default function ProjectsPage() {
   return (
-    <main className="container case-wrap">
-      <Link
-        href={`/projects/${INTERNSHIP_SLUG}`}
-        className="back-link"
+    <main>
+      <section
+        className="section container"
+        style={{
+          paddingTop: "80px",
+          paddingBottom: "100px",
+        }}
       >
-        <ArrowLeft size={17} />
-        Back to Internship Projects
-      </Link>
+        {/* BACK TO HOME */}
+        <Link href="/" className="back-link">
+          <ArrowLeft size={17} />
+          Back to Home
+        </Link>
 
-      <div className="case-eyebrow">
-        DIGITAL TRANSFORMATION UNIT / {work.category}
-      </div>
-
-      <h1 className="case-title">
-        {work.title}
-        <span className="period">.</span>
-      </h1>
-
-      <p className="case-lead">{work.summary}</p>
-
-      <div className="case-content">
-        <div>
-          <section className="case-section">
-            <h2>
-              <Target size={20} />
-              The Problem
-            </h2>
-            <p>{work.problem}</p>
-          </section>
-
-          <section className="case-section">
-            <h2>Project Description</h2>
-            <p>{work.solution}</p>
-          </section>
-
-          <section className="case-section">
-            <h2>
-              <Wrench size={20} />
-              My Contributions
-            </h2>
-            <ul>
-              {work.contribution.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </section>
-
-          <section className="case-section">
-            <h2>
-              <CheckCircle2 size={20} />
-              Outcome
-            </h2>
-            <p>{work.outcome}</p>
-          </section>
+        {/* SECTION HEADING */}
+        <div
+          className="section-label"
+          style={{ marginTop: "40px" }}
+        >
+          <span>ENGINEERING PORTFOLIO / PROJECTS</span>
+          <div className="line" />
         </div>
 
-        <aside className="case-side">
-          <div className="side-title">
-            TOOLS & TECHNOLOGIES
-          </div>
+        <div
+          className="section-top"
+          style={{ marginBottom: "40px" }}
+        >
+          <div>
+            <h1
+              style={{
+                fontSize: "clamp(36px, 6vw, 68px)",
+                lineHeight: 1.1,
+                letterSpacing: "-1.5px",
+                marginBottom: "20px",
+              }}
+            >
+              Selected{" "}
+              <span className="gradient-text">
+                Projects.
+              </span>
+            </h1>
 
-          <div className="tag-row">
-            {work.tools.map((tool) => (
-              <span key={tool}>{tool}</span>
+            <p
+              className="section-description"
+              style={{ maxWidth: "650px" }}
+            >
+              A collection of engineering projects covering
+              mechatronics, industrial automation, IoT,
+              programming, and manufacturing digitalisation.
+
+              Explore the engineering challenges, technologies,
+              implementation methods, and practical outcomes
+              behind each project.
+            </p>
+          </div>
+        </div>
+
+        {/* PROJECT CARDS */}
+        {projects.length > 0 ? (
+          <div className="projects-grid">
+            {projects.map((project, index) => (
+              <ProjectCard
+                key={project.slug}
+                project={project}
+                index={index}
+              />
             ))}
           </div>
-
-          <div className="side-title" style={{ marginTop: 32 }}>
-            SYSTEM ARCHITECTURE
+        ) : (
+          <div
+            style={{
+              padding: "40px 20px",
+              border: "1px solid rgba(120,160,200,0.2)",
+              borderRadius: "16px",
+              textAlign: "center",
+            }}
+          >
+            <h2>Projects coming soon.</h2>
+            <p className="section-description">
+              Engineering project documentation will be
+              available here.
+            </p>
           </div>
+        )}
 
-          {work.architecture.map((step, index) => (
-            <div className="arch-step" key={step}>
-              <span>
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              {step}
-              {index < work.architecture.length - 1 && (
-                <i>↓</i>
-              )}
-            </div>
-          ))}
-        </aside>
-      </div>
+        {/* FOOTER NAVIGATION */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "60px",
+          }}
+        >
+          <Link href="/#contact" className="primary-btn">
+            Let's Connect
+            <ArrowUpRight size={18} />
+          </Link>
+        </div>
+      </section>
     </main>
   );
 }

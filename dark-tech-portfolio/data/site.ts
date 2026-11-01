@@ -16,7 +16,7 @@ export const profile = {
   email: "afiqafdhal247@gmail.com",
   phone: "018-4024703",
   github: "",
-  linkedin: "",
+  linkedin: "https://www.linkedin.com/in/afiq-afdhal-1318081b6/",
   resume: "/resume.pdf",
 };
 
