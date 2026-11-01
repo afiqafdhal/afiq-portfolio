@@ -4747,3 +4747,785 @@ section[id] {
     transition: none;
   }
 }
+
+/* ============================================
+   AA PORTFOLIO - ANIMATED TECH BACKGROUND
+   ============================================ */
+
+body {
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Keep page sections above the background */
+body > *:not(.site-bg) {
+  position: relative;
+  z-index: 1;
+}
+
+/* Fixed ambient background */
+.site-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  isolation: isolate;
+  background: #06101e;
+}
+
+/* Engineering grid */
+.site-bg-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.25;
+  background-image:
+    linear-gradient(
+      rgba(100, 170, 230, 0.08) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(100, 170, 230, 0.08) 1px,
+      transparent 1px
+    );
+  background-size: 80px 80px;
+}
+
+/* Soft ambient glows */
+.site-bg-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(65px);
+  opacity: 0.22;
+}
+
+.site-bg-glow-1 {
+  width: 360px;
+  height: 360px;
+  top: 10%;
+  left: -120px;
+  background: #266bb5;
+  animation: aaGlowOne 18s ease-in-out infinite;
+}
+
+.site-bg-glow-2 {
+  width: 320px;
+  height: 320px;
+  right: -120px;
+  top: 40%;
+  background: #1286a9;
+  animation: aaGlowTwo 22s ease-in-out infinite;
+}
+
+.site-bg-glow-3 {
+  width: 270px;
+  height: 270px;
+  left: 45%;
+  bottom: -130px;
+  background: #345ba9;
+  animation: aaGlowThree 25s ease-in-out infinite;
+}
+
+/* Large moving circles */
+.site-bg-ring {
+  position: absolute;
+  border: 1px solid rgba(80, 200, 244, 0.15);
+  border-radius: 50%;
+}
+
+.site-bg-ring-1 {
+  width: 480px;
+  height: 480px;
+  right: -130px;
+  bottom: -90px;
+  animation: aaRingOne 20s ease-in-out infinite;
+}
+
+.site-bg-ring-2 {
+  width: 720px;
+  height: 720px;
+  right: -260px;
+  bottom: -210px;
+  border-color: rgba(70, 145, 235, 0.12);
+  animation: aaRingTwo 27s ease-in-out infinite;
+}
+
+.site-bg-ring-3 {
+  width: 410px;
+  height: 410px;
+  left: -140px;
+  top: 80px;
+  border-color: rgba(76, 200, 230, 0.1);
+  animation: aaRingThree 23s ease-in-out infinite;
+}
+
+/* Animations */
+@keyframes aaGlowOne {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(45px, 30px) scale(1.12);
+  }
+}
+
+@keyframes aaGlowTwo {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-35px, -30px) scale(1.1);
+  }
+}
+
+@keyframes aaGlowThree {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(25px, -40px) scale(1.08);
+  }
+}
+
+@keyframes aaRingOne {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-24px, -18px);
+  }
+}
+
+@keyframes aaRingTwo {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-16px, 20px);
+  }
+}
+
+@keyframes aaRingThree {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(20px, -16px);
+  }
+}
+
+/* Mobile optimisation */
+@media (max-width: 768px) {
+  .site-bg-grid {
+    background-size: 55px 55px;
+  }
+
+  .site-bg-glow {
+    opacity: 0.13;
+  }
+
+  .site-bg-ring-1 {
+    width: 300px;
+    height: 300px;
+    right: -110px;
+  }
+
+  .site-bg-ring-2 {
+    width: 480px;
+    height: 480px;
+    right: -190px;
+  }
+
+  .site-bg-ring-3 {
+    width: 250px;
+    height: 250px;
+    left: -100px;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .site-bg-glow,
+  .site-bg-ring {
+    animation: none;
+  }
+}
+
+/* ==========================================
+   MORE VISIBLE ANIMATED BACKGROUND
+   ========================================== */
+
+/* Moving rings */
+.site-bg-ring-1 {
+  animation: aaVisibleRing1 12s ease-in-out infinite alternate;
+}
+
+.site-bg-ring-2 {
+  animation: aaVisibleRing2 16s ease-in-out infinite alternate;
+}
+
+.site-bg-ring-3 {
+  animation: aaVisibleRing3 14s ease-in-out infinite alternate;
+}
+
+/* Moving blue ambient glows */
+.site-bg-glow-1 {
+  animation: aaVisibleGlow1 10s ease-in-out infinite alternate;
+}
+
+.site-bg-glow-2 {
+  animation: aaVisibleGlow2 13s ease-in-out infinite alternate;
+}
+
+.site-bg-glow-3 {
+  animation: aaVisibleGlow3 15s ease-in-out infinite alternate;
+}
+
+/* Ring animations */
+@keyframes aaVisibleRing1 {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(-75px, -45px, 0) scale(1.12);
+  }
+}
+
+@keyframes aaVisibleRing2 {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(-65px, 55px, 0) scale(1.08);
+  }
+}
+
+@keyframes aaVisibleRing3 {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(75px, 50px, 0) scale(1.15);
+  }
+}
+
+/* Glow animations */
+@keyframes aaVisibleGlow1 {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(100px, 65px, 0);
+  }
+}
+
+@keyframes aaVisibleGlow2 {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-95px, -70px, 0);
+  }
+}
+
+@keyframes aaVisibleGlow3 {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(75px, -85px, 0);
+  }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .site-bg-ring,
+  .site-bg-glow {
+    animation: none !important;
+  }
+}
+
+/* ============================================
+   AA PREMIUM ANIMATED ENGINEERING BACKGROUND
+   ============================================ */
+
+.site-bg.premium-bg {
+  --pointer-x: 50vw;
+  --pointer-y: 50vh;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  isolation: isolate;
+  background:
+    radial-gradient(
+      ellipse at 50% 40%,
+      #0a2034 0%,
+      #061321 65%,
+      #040c17 100%
+    );
+}
+
+/* Engineering grid */
+.premium-grid {
+  position: absolute;
+  inset: -20%;
+  background-image:
+    linear-gradient(
+      rgba(87, 164, 222, 0.075) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(87, 164, 222, 0.075) 1px,
+      transparent 1px
+    );
+  background-size: 75px 75px;
+  opacity: 0.45;
+  transform: perspective(800px) rotateX(8deg);
+  animation: premiumGrid 35s linear infinite;
+}
+
+/* Moving aurora lights */
+.premium-aurora {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(75px);
+  will-change: transform;
+}
+
+.premium-aurora-one {
+  width: 520px;
+  height: 520px;
+  left: -220px;
+  top: -150px;
+  background: rgba(17, 133, 215, 0.24);
+  animation: premiumAuroraOne 17s ease-in-out infinite alternate;
+}
+
+.premium-aurora-two {
+  width: 600px;
+  height: 600px;
+  right: -280px;
+  top: 20%;
+  background: rgba(23, 191, 194, 0.15);
+  animation: premiumAuroraTwo 21s ease-in-out infinite alternate;
+}
+
+.premium-aurora-three {
+  width: 440px;
+  height: 440px;
+  left: 35%;
+  bottom: -260px;
+  background: rgba(57, 91, 230, 0.17);
+  animation: premiumAuroraThree 25s ease-in-out infinite alternate;
+}
+
+/* Orbital groups */
+.premium-orbit {
+  position: absolute;
+  width: 760px;
+  height: 760px;
+  transform-origin: center;
+  will-change: transform;
+}
+
+.premium-orbit-right {
+  right: -270px;
+  bottom: -230px;
+  animation: premiumOrbitFloat 19s ease-in-out infinite alternate;
+}
+
+.premium-orbit-left {
+  width: 540px;
+  height: 540px;
+  left: -320px;
+  top: -100px;
+  opacity: 0.65;
+  animation: premiumOrbitFloatLeft 23s ease-in-out infinite alternate;
+}
+
+.premium-orbit-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(90, 196, 242, 0.2);
+}
+
+.premium-orbit-ring.ring-outer {
+  inset: 0;
+  border-color: rgba(79, 164, 220, 0.13);
+}
+
+.premium-orbit-ring.ring-middle {
+  inset: 75px;
+  border-color: rgba(77, 211, 229, 0.18);
+}
+
+.premium-orbit-ring.ring-inner {
+  inset: 155px;
+  border-color: rgba(77, 159, 247, 0.23);
+}
+
+.premium-orbit-ring.ring-dashed {
+  inset: 215px;
+  border-style: dashed;
+  border-color: rgba(101, 207, 247, 0.23);
+  animation: premiumSpin 45s linear infinite;
+}
+
+.premium-orbit-dot {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  left: 24%;
+  top: 24%;
+  border-radius: 50%;
+  background: #63dbe9;
+  box-shadow: 0 0 15px rgba(99, 219, 233, 0.7);
+  animation: premiumPulse 4s ease-in-out infinite;
+}
+
+/* Floating particles */
+.premium-particles {
+  position: absolute;
+  inset: 0;
+}
+
+.premium-particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #77caff;
+  box-shadow: 0 0 9px rgba(119, 202, 255, 0.6);
+  opacity: 0.45;
+  animation: premiumParticleFloat ease-in-out infinite alternate;
+}
+
+/* Mouse-follow glow */
+.premium-pointer-glow {
+  position: absolute;
+  left: var(--pointer-x);
+  top: var(--pointer-y);
+  width: 440px;
+  height: 440px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle,
+    rgba(51, 145, 235, 0.1) 0%,
+    rgba(51, 145, 235, 0.03) 40%,
+    transparent 70%
+  );
+}
+
+/* Vignette */
+.premium-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 30%,
+    rgba(2, 8, 18, 0.35) 100%
+  );
+}
+
+/* ============================================
+   PREMIUM ANIMATION KEYFRAMES
+   ============================================ */
+
+@keyframes premiumGrid {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 75px 75px;
+  }
+}
+
+@keyframes premiumAuroraOne {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(180px, 105px, 0) scale(1.15);
+  }
+}
+
+@keyframes premiumAuroraTwo {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(-180px, -90px, 0) scale(1.2);
+  }
+}
+
+@keyframes premiumAuroraThree {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(120px, -150px, 0) scale(1.12);
+  }
+}
+
+@keyframes premiumOrbitFloat {
+  from {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  to {
+    transform: translate3d(-70px, -50px, 0) rotate(8deg);
+  }
+}
+
+@keyframes premiumOrbitFloatLeft {
+  from {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  to {
+    transform: translate3d(90px, 65px, 0) rotate(-10deg);
+  }
+}
+
+@keyframes premiumSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes premiumPulse {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.5);
+  }
+}
+
+@keyframes premiumParticleFloat {
+  from {
+    transform: translate3d(0, 0, 0);
+    opacity: 0.15;
+  }
+  to {
+    transform: translate3d(22px, -60px, 0);
+    opacity: 0.7;
+  }
+}
+
+/* ============================================
+   MOBILE PERFORMANCE & ACCESSIBILITY
+   ============================================ */
+
+@media (max-width: 768px) {
+  .premium-grid {
+    background-size: 60px 60px;
+    opacity: 0.28;
+  }
+
+  .premium-orbit-right {
+    transform-origin: center;
+    right: -470px;
+    bottom: -300px;
+  }
+
+  .premium-orbit-left {
+    left: -390px;
+    top: -150px;
+  }
+
+  .premium-aurora {
+    filter: blur(65px);
+    opacity: 0.55;
+  }
+
+  .premium-pointer-glow {
+    display: none;
+  }
+
+  .premium-particle:nth-child(n + 5) {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .premium-grid,
+  .premium-aurora,
+  .premium-orbit,
+  .premium-orbit-ring,
+  .premium-orbit-dot,
+  .premium-particle {
+    animation: none !important;
+    will-change: auto;
+  }
+
+  .premium-pointer-glow {
+    display: none;
+  }
+}
+
+/* REMOVE SELECTED PROJECTS SECTION BORDERS */
+
+.section-projects {
+  border-top: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+/* ALLOW ANIMATED BACKGROUND BEHIND PROJECTS */
+
+.section-projects {
+  background: transparent !important;
+}
+
+/* =============================================
+   AA PORTFOLIO - PREMIUM SOFT LIGHT BACKGROUND
+   ============================================= */
+
+/* Background layer */
+.site-bg.soft-light-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background: #061321;
+  isolation: isolate;
+}
+
+/* Soft lighting */
+.soft-light-bg .soft-light {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(85px);
+  opacity: 0.65;
+  will-change: transform, opacity;
+}
+
+/* Blue light - upper left */
+.soft-light-bg .soft-light-one {
+  width: 650px;
+  height: 650px;
+  left: -300px;
+  top: -250px;
+  background: radial-gradient(
+    circle,
+    rgba(28, 126, 225, 0.35) 0%,
+    rgba(28, 126, 225, 0.12) 45%,
+    transparent 75%
+  );
+  animation: softLightOne 18s ease-in-out infinite alternate;
+}
+
+/* Cyan light - right side */
+.soft-light-bg .soft-light-two {
+  width: 720px;
+  height: 720px;
+  right: -360px;
+  top: 20%;
+  background: radial-gradient(
+    circle,
+    rgba(22, 195, 205, 0.27) 0%,
+    rgba(22, 195, 205, 0.09) 45%,
+    transparent 75%
+  );
+  animation: softLightTwo 24s ease-in-out infinite alternate;
+}
+
+/* Deep blue light - bottom */
+.soft-light-bg .soft-light-three {
+  width: 620px;
+  height: 620px;
+  left: 30%;
+  bottom: -350px;
+  background: radial-gradient(
+    circle,
+    rgba(67, 96, 230, 0.27) 0%,
+    rgba(67, 96, 230, 0.08) 45%,
+    transparent 75%
+  );
+  animation: softLightThree 22s ease-in-out infinite alternate;
+}
+
+/* =============================================
+   SLOW LIGHT MOVEMENT
+   ============================================= */
+
+@keyframes softLightOne {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.45;
+  }
+
+  100% {
+    transform: translate3d(220px, 150px, 0) scale(1.2);
+    opacity: 0.85;
+  }
+}
+
+@keyframes softLightTwo {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.4;
+  }
+
+  100% {
+    transform: translate3d(-250px, -130px, 0) scale(1.15);
+    opacity: 0.8;
+  }
+}
+
+@keyframes softLightThree {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.35;
+  }
+
+  100% {
+    transform: translate3d(170px, -180px, 0) scale(1.2);
+    opacity: 0.7;
+  }
+}
+
+/* Mobile performance */
+@media (max-width: 768px) {
+  .soft-light-bg .soft-light {
+    filter: blur(65px);
+    opacity: 0.45;
+  }
+
+  .soft-light-bg .soft-light-one {
+    width: 400px;
+    height: 400px;
+    left: -200px;
+    top: -140px;
+  }
+
+  .soft-light-bg .soft-light-two {
+    width: 420px;
+    height: 420px;
+    right: -240px;
+  }
+
+  .soft-light-bg .soft-light-three {
+    width: 380px;
+    height: 380px;
+    bottom: -200px;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .soft-light-bg .soft-light {
+    animation: none !important;
+    will-change: auto;
+  }
+}

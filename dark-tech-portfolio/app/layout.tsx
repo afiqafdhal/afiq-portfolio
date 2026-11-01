@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { BackgroundFX } from "@/components/background-fx";
 import { profile } from "@/data/site";
 
 // =====================================
@@ -12,7 +13,8 @@ import { profile } from "@/data/site";
 
 const siteName = `${profile.name} | Engineering Portfolio`;
 
-const siteTitle = `${profile.name} | Mechatronics Engineering Portfolio`;
+const siteTitle =
+  `${profile.name} | Mechatronics Engineering Portfolio`;
 
 const siteDescription =
   `${profile.name}'s engineering portfolio showcasing ` +
@@ -98,7 +100,7 @@ export const metadata: Metadata = {
 };
 
 // =====================================
-// ROOT LAYOUT
+// ROOT LAYOUT + ANIMATED BACKGROUND
 // =====================================
 
 export default function RootLayout({
@@ -109,6 +111,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <BackgroundFX />
         <Header />
         {children}
         <Footer />
