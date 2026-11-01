@@ -1,6 +1,5 @@
 
 import Link from "next/link";
-import Image from "next/image";
 import {
   ArrowDown,
   ArrowRight,
@@ -31,10 +30,45 @@ const technicalExperience = [
   "Production monitoring and engineering troubleshooting.",
 ];
 
+const showcaseTechnologies = [
+  "Raspberry Pi",
+  "Python",
+  "MQTT",
+  "Node-RED",
+  "InfluxDB",
+  "Grafana",
+];
+
+const recruiterStrengths = [
+  {
+    title: "Hardware & Automation",
+    description:
+      "Understanding sensor integration, electronics, Raspberry Pi and mechatronic system prototyping.",
+    tags: ["Sensors", "Raspberry Pi", "Electronics"],
+    icon: CircuitBoard,
+  },
+  {
+    title: "Programming & Applied AI",
+    description:
+      "Applying programming and computer vision concepts to engineering projects and experimental systems.",
+    tags: ["Python", "OpenCV", "YOLOv8"],
+    icon: Code2,
+  },
+  {
+    title: "Industrial IoT & Data",
+    description:
+      "Exposure to manufacturing monitoring, device communication and data visualisation systems.",
+    tags: ["Node-RED", "MQTT", "Grafana"],
+    icon: Network,
+  },
+];
+
 export default function Home() {
   return (
     <main>
-      {/* HERO SECTION */}
+      {/* ==========================================
+          HERO SECTION
+          ========================================== */}
       <section className="hero container">
         <div className="hero-copy">
           <div className="eyebrow">
@@ -43,18 +77,18 @@ export default function Home() {
           </div>
 
           <p className="hero-pre">
-            HELLO, I’M {profile.name.toUpperCase()}
+            HELLO, I&apos;M {profile.name.toUpperCase()}
           </p>
 
+          {/* AA PROFILE LOGO */}
           <div className="profile-photo-wrapper">
-            <Image
-              src="/images/profile/me.jpg"
-              alt={`${profile.name} profile photo`}
-              width={160}
-              height={160}
-              className="profile-photo"
-              priority
-            />
+            <div
+              className="hero-aa-avatar"
+              role="img"
+              aria-label="AA engineering portfolio logo"
+            >
+              <span>AA</span>
+            </div>
           </div>
 
           <h1>
@@ -74,8 +108,12 @@ export default function Home() {
             {profile.description}
           </p>
 
+          {/* HERO BUTTONS */}
           <div className="hero-actions">
-            <Link href="/projects" className="primary-btn">
+            <Link
+              href="/projects"
+              className="primary-btn"
+            >
               Explore case studies
               <ArrowUpRight size={18} />
             </Link>
@@ -106,13 +144,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 aria-label="Visit my LinkedIn profile"
                 title="Visit my LinkedIn profile"
-                className="secondary-btn"
-                style={{
-                  width: "46px",
-                  height: "46px",
-                  padding: 0,
-                  justifyContent: "center",
-                }}
+                className="secondary-btn hero-linkedin"
               >
                 <Linkedin size={22} />
               </a>
@@ -132,31 +164,67 @@ export default function Home() {
           </div>
         </div>
 
+        {/* ==========================================
+            INDUSTRIAL IoT SHOWCASE
+            ========================================== */}
         <div className="hero-visual">
           <div className="visual-glow" />
 
           <div className="dashboard-float">
             <span className="float-icon">
               <Cpu size={18} />
-            </span>{" "}
-            Industrial monitoring{" "}
+            </span>
+
+            <span>Industrial IoT Showcase</span>
+
             <span className="float-indicator">
-              CONCEPT
+              PROJECT DEMO
             </span>
           </div>
 
+          {/* Existing demonstration dashboard */}
           <MonitorVisual />
 
           <div className="hero-grid-notes">
             <span>
-              ILLUSTRATIVE DASHBOARD · NOT LIVE DATA
+              ILLUSTRATIVE DATA · NOT LIVE PRODUCTION
             </span>
             <span>EDGE → DATA → INSIGHT</span>
           </div>
+
+          {/* TECHNOLOGY STACK */}
+          <div className="hero-showcase-tech">
+            {showcaseTechnologies.map((technology) => (
+              <span key={technology}>
+                {technology}
+              </span>
+            ))}
+          </div>
+
+          {/* LINK TO ACTUAL PROJECT */}
+          <Link
+            href="/projects/manufacturing-digital-transformation/work/production-monitoring-dashboard"
+            className="hero-showcase-link"
+          >
+            <span>
+              <strong>
+                Production Monitoring Dashboard
+              </strong>
+
+              <small>
+                Explore the project architecture and
+                my technical contributions
+              </small>
+            </span>
+
+            <ArrowUpRight size={20} />
+          </Link>
         </div>
       </section>
 
-      {/* RECRUITER OVERVIEW */}
+      {/* ==========================================
+          RECRUITER OVERVIEW
+          ========================================== */}
       <section
         className="container recruiter-overview"
         aria-label="Engineering profile overview"
@@ -222,75 +290,42 @@ export default function Home() {
           </div>
         </div>
 
+        {/* TECHNICAL STRENGTH CARDS */}
         <div className="recruiter-strengths">
-          <article className="recruiter-strength-card">
-            <div className="recruiter-strength-top">
-              <div className="recruiter-strength-icon">
-                <CircuitBoard size={23} />
-              </div>
-              <span>01 /</span>
-            </div>
+          {recruiterStrengths.map(
+            (strength, index) => {
+              const StrengthIcon = strength.icon;
 
-            <h3>Hardware & Automation</h3>
+              return (
+                <article
+                  className="recruiter-strength-card"
+                  key={strength.title}
+                >
+                  <div className="recruiter-strength-top">
+                    <div className="recruiter-strength-icon">
+                      <StrengthIcon size={23} />
+                    </div>
 
-            <p>
-              Understanding sensor integration,
-              electronics, Raspberry Pi and
-              mechatronic system prototyping.
-            </p>
+                    <span>
+                      {String(index + 1).padStart(2, "0")} /
+                    </span>
+                  </div>
 
-            <div className="recruiter-strength-tags">
-              <span>Sensors</span>
-              <span>Raspberry Pi</span>
-              <span>Electronics</span>
-            </div>
-          </article>
+                  <h3>{strength.title}</h3>
 
-          <article className="recruiter-strength-card">
-            <div className="recruiter-strength-top">
-              <div className="recruiter-strength-icon">
-                <Code2 size={23} />
-              </div>
-              <span>02 /</span>
-            </div>
+                  <p>{strength.description}</p>
 
-            <h3>Programming & Applied AI</h3>
-
-            <p>
-              Applying programming and computer vision
-              concepts to engineering projects and
-              experimental systems.
-            </p>
-
-            <div className="recruiter-strength-tags">
-              <span>Python</span>
-              <span>OpenCV</span>
-              <span>YOLOv8</span>
-            </div>
-          </article>
-
-          <article className="recruiter-strength-card">
-            <div className="recruiter-strength-top">
-              <div className="recruiter-strength-icon">
-                <Network size={23} />
-              </div>
-              <span>03 /</span>
-            </div>
-
-            <h3>Industrial IoT & Data</h3>
-
-            <p>
-              Exposure to manufacturing monitoring,
-              device communication and data
-              visualisation systems.
-            </p>
-
-            <div className="recruiter-strength-tags">
-              <span>Node-RED</span>
-              <span>MQTT</span>
-              <span>Grafana</span>
-            </div>
-          </article>
+                  <div className="recruiter-strength-tags">
+                    {strength.tags.map((tag) => (
+                      <span key={tag}>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </article>
+              );
+            }
+          )}
         </div>
 
         <div className="recruiter-bottom-note">
@@ -306,7 +341,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FOCUS AREAS */}
+      {/* ==========================================
+          FOCUS AREAS
+          ========================================== */}
       <section className="strip">
         <div className="container strip-content">
           <span>FOCUS AREAS</span>
@@ -316,10 +353,12 @@ export default function Home() {
               <CircuitBoard size={18} />
               MECHATRONICS
             </span>
+
             <span>
               <Code2 size={18} />
               PROGRAMMING
             </span>
+
             <span>
               <Cpu size={18} />
               AUTOMATION
@@ -328,17 +367,20 @@ export default function Home() {
         </div>
       </section>
 
-      {/* =================================
-          ABOUT ME - REDESIGNED
-          ================================= */}
-      <section className="section container" id="about">
+      {/* ==========================================
+          ABOUT ME
+          ========================================== */}
+      <section
+        className="section container"
+        id="about"
+      >
         <div className="section-label">
           <span>01 / ABOUT ME</span>
           <div className="line" />
         </div>
 
         <div className="about-grid about-redesign">
-          {/* LEFT - INTRODUCTION */}
+          {/* INTRODUCTION */}
           <div className="about-introduction">
             <div className="about-kicker">
               <span className="pulse" />
@@ -354,10 +396,10 @@ export default function Home() {
 
             <p className="section-description">
               I am a Mechatronics Engineering student at
-              Universiti Teknologi MARA (UiTM), passionate
-              about connecting hardware, software, and
-              industrial automation to develop practical
-              engineering solutions.
+              Universiti Teknologi MARA (UiTM),
+              passionate about connecting hardware,
+              software, and industrial automation to
+              develop practical engineering solutions.
             </p>
 
             <p className="section-description">
@@ -388,9 +430,8 @@ export default function Home() {
             </div>
           </div>
 
-          {/* RIGHT - ENGINEERING PROFILE CARDS */}
+          {/* ABOUT FEATURE CARDS */}
           <div className="about-feature-grid">
-            {/* INDUSTRIAL EXPERIENCE */}
             <div className="about-feature-card about-feature-main">
               <div className="about-feature-icon">
                 <BriefcaseBusiness size={24} />
@@ -400,7 +441,9 @@ export default function Home() {
                 INDUSTRIAL EXPERIENCE
               </span>
 
-              <h3>Manufacturing Digitalisation</h3>
+              <h3>
+                Manufacturing Digitalisation
+              </h3>
 
               <p>
                 Exposure to industrial IoT, production
@@ -418,7 +461,6 @@ export default function Home() {
               </Link>
             </div>
 
-            {/* HARDWARE AND SOFTWARE */}
             <div className="about-feature-card">
               <div className="about-feature-icon">
                 <CircuitBoard size={23} />
@@ -428,12 +470,11 @@ export default function Home() {
 
               <p>
                 Connecting sensors, Raspberry Pi,
-                programming, and electronics to
-                develop and test engineering systems.
+                programming, and electronics to develop
+                and test engineering systems.
               </p>
             </div>
 
-            {/* AI AND INNOVATION */}
             <div className="about-feature-card">
               <div className="about-feature-icon">
                 <Cpu size={23} />
@@ -451,7 +492,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SELECTED PROJECTS */}
+      {/* ==========================================
+          SELECTED PROJECTS
+          ========================================== */}
       <section
         className="section section-projects"
         id="projects"
@@ -479,8 +522,8 @@ export default function Home() {
             </div>
 
             <Link
-              className="text-link"
               href="/projects"
+              className="text-link"
             >
               All projects
               <ArrowUpRight size={19} />
@@ -488,18 +531,20 @@ export default function Home() {
           </div>
 
           <div className="projects-grid">
-            {projects.map((p, i) => (
+            {projects.map((project, index) => (
               <ProjectCard
-                key={p.slug}
-                project={p}
-                index={i}
+                key={project.slug}
+                project={project}
+                index={index}
               />
             ))}
           </div>
         </div>
       </section>
 
-      {/* TECHNICAL EXPERTISE */}
+      {/* ==========================================
+          TECHNICAL EXPERTISE
+          ========================================== */}
       <section
         className="section container"
         id="expertise"
@@ -567,7 +612,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* EXPERIENCE */}
+      {/* ==========================================
+          INDUSTRIAL EXPERIENCE
+          ========================================== */}
       <section
         className="section container"
         id="experience"
@@ -744,7 +791,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CONTACT */}
+      {/* ==========================================
+          CONTACT
+          ========================================== */}
       <section
         className="section container"
         id="contact"
@@ -756,18 +805,18 @@ export default function Home() {
           </span>
 
           <h2>
-            Let's build the future of{" "}
+            Let&apos;s build the future of{" "}
             <span className="gradient-text">
               engineering.
             </span>
           </h2>
 
           <p>
-            I'm seeking full-time opportunities in
+            I&apos;m seeking full-time opportunities in
             Mechatronics, Industrial Automation, IoT and
             Manufacturing Technology. With hands-on
             exposure to engineering projects, programming
-            and manufacturing digitalisation, I'm eager
+            and manufacturing digitalisation, I&apos;m eager
             to contribute to innovative engineering teams
             and develop practical technical solutions.
           </p>

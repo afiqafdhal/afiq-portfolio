@@ -4571,3 +4571,179 @@ section[id] {
     font-size: 14px;
   }
 }
+
+/* =========================================
+   HOMEPAGE - AA BRANDING & IoT SHOWCASE
+   ========================================= */
+
+/* AA avatar */
+.hero-aa-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 150px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #152b46, #091525);
+  border: 2px solid #59baff;
+  box-shadow:
+    0 0 0 5px rgba(70, 155, 245, 0.08),
+    0 0 35px rgba(60, 143, 244, 0.18);
+}
+
+.hero-aa-avatar span {
+  font-size: 48px;
+  font-weight: 800;
+  letter-spacing: -3px;
+  line-height: 1;
+  background: linear-gradient(135deg, #70e0e6, #4b8ef7);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* LinkedIn icon */
+.hero-actions .hero-linkedin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+/* Showcase container */
+.hero-visual {
+  min-width: 0;
+}
+
+/* Technology tags */
+.hero-showcase-tech {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.hero-showcase-tech span {
+  padding: 7px 10px;
+  border: 1px solid #345777;
+  border-radius: 6px;
+  background: rgba(25, 52, 80, 0.75);
+  color: #afcce6;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+/* Project details link */
+.hero-showcase-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 15px;
+  padding: 17px 19px;
+  border: 1px solid #3b6185;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #17314e, #102138);
+  color: #eaf4ff;
+  text-decoration: none;
+  transition:
+    border-color 0.25s ease,
+    background-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.hero-showcase-link > span {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.hero-showcase-link strong {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.hero-showcase-link small {
+  font-size: 11px;
+  color: #a7c2dc;
+  line-height: 1.5;
+}
+
+.hero-showcase-link > svg {
+  flex-shrink: 0;
+  color: #78c9fb;
+}
+
+.hero-showcase-link:focus-visible {
+  outline: 2px solid #7fd5ff;
+  outline-offset: 3px;
+}
+
+@media (hover: hover) {
+  .hero-showcase-link:hover {
+    border-color: #67b6ee;
+    transform: translateY(-2px);
+    background: #1b3857;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .hero-showcase-tech {
+    justify-content: flex-start;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .hero-aa-avatar {
+    width: 95px;
+    height: 95px;
+  }
+
+  .hero-aa-avatar span {
+    font-size: 32px;
+    letter-spacing: -2px;
+  }
+
+  .hero-showcase-tech {
+    justify-content: flex-start;
+    gap: 7px;
+    margin-top: 17px;
+  }
+
+  .hero-showcase-tech span {
+    font-size: 10px;
+    padding: 7px 9px;
+  }
+
+  .hero-showcase-link {
+    min-height: 65px;
+    padding: 15px;
+  }
+
+  .hero-showcase-link strong {
+    font-size: 13px;
+  }
+
+  .hero-showcase-link small {
+    font-size: 11px;
+  }
+
+  .hero-actions .hero-linkedin {
+    min-width: 46px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-showcase-link {
+    transition: none;
+  }
+}
